@@ -1,4 +1,4 @@
-# docker-stack-collection
+# Collection of various docker-compose files for docker swarm
 
 This repository contains a set of docker-compose and backup shell scripts made for use with docker swarm. 
 Additionally, a minimalistic nginx config file is included that can be used as a base.

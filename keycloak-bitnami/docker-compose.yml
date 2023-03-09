@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+  postgresql:
+    image: bitnami/postgresql:latest
+    environment:
+      - POSTGRESQL_POSTGRES_PASSWORD=postgres_password
+      - POSTGRESQL_DATABASE=keycloak
+      - POSTGRESQL_USERNAME=keycloak
+      - POSTGRESQL_PASSWORD=password
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+
+  keycloak:
+    image: bitnami/keycloak:latest
+    depends_on:
+      - postgresql
+    environment:
+      - KEYCLOAK_DATABASE_NAME=keycloak
+      - KEYCLOAK_DATABASE_USER=keycloak
+      - KEYCLOAK_DATABASE_PASSWORD=password
+      - KEYCLOAK_ADMIN_USER=user
+      - KEYCLOAK_ADMIN_PASSWORD=bitnami
+      - KEYCLOAK_MANAGEMENT_USER=manager
+      - KEYCLOAK_MANAGEMENT_PASSWORD=bitnami
+      - KEYCLOAK_ENABLE_HTTPS=true
+      - KEYCLOAK_HTTPS_USE_PEM=true
+      - KEYCLOAK_HTTPS_CERTIFICATE_FILE=/opt/bitnami/keycloak/certs/cert1.pem
+      - KEYCLOAK_HTTPS_CERTIFICATE_KEY_FILE=/opt/bitnami/keycloak/certs/privkey1.pem
+      - KEYCLOAK_PRODUCTION=true
+    volumes:
+      - ./cert:/opt/bitnami/keycloak/certs
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgresql_data:
